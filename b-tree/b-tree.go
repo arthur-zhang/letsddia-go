@@ -1,5 +1,6 @@
 package b_tree
 
+// T degree of b-tree
 const T = 2
 
 type Node struct {
@@ -20,10 +21,13 @@ type Btree struct {
 	root *Node
 }
 
-func NewBtree(t int) Btree {
+func NewBtree() Btree {
 	return Btree{
 		root: NewNode(true),
 	}
+}
+func (b *Btree) Search(key int) (*Node, int) {
+	return b.search(b.root, key)
 }
 
 func (b *Btree) search(x *Node, key int) (*Node, int) {
@@ -34,7 +38,7 @@ func (b *Btree) search(x *Node, key int) (*Node, int) {
 	i := 0
 	// Search for the key in the current node and find the first index i
 	// such that key <= x.keys[i]
-	for i <= len(x.keys) && key > x.keys[i] {
+	for i < len(x.keys) && key > x.keys[i] {
 		i++
 	}
 	// Check if the key is found at index i
