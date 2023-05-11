@@ -1,7 +1,7 @@
 #### A toy persistent B-Tree implementation in Go
 
 This is a persistent B-Tree implementation in Go. It is based on the memory B-Tree implementation
-in [b-tree-mem](../b-tree-mem/README.md).
+in [b-tree-mem](../b-tree-mem).
 
 #### Details
 
