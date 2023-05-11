@@ -93,6 +93,7 @@ func (x *Node) insertNonFull(key int) {
 		// If the child node is full, split it
 		if len(x.children[i].keys) == 2*T-1 {
 			x.splitChild(x.children[i], i)
+			// important! check if key is in the new right node
 			if key > x.keys[i] {
 				i++
 			}
