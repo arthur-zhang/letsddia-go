@@ -13,7 +13,6 @@ and maintainable data-intensive applications across different language ecosystem
 
 ### Upcoming
 
-* K Way Merging File
 * Bitcask(Rust done, Go in progress)
 * TDigest
 * HyperLogLog
@@ -26,6 +25,9 @@ and maintainable data-intensive applications across different language ecosystem
 * Ntp
 * Sql parser
 * Column-storage
+
+### Misc
+* [K Way Merging File](./merging-k-sorted-list)
 
 ### BTree
 
