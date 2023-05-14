@@ -3,6 +3,6 @@ go 1.20
 use (
 	./btree/b-tree-mem
 	./btree/b-tree-on-disk
-	./k-way-merging
+	./merging-k-sorted-list
 	./skiplist
 )
