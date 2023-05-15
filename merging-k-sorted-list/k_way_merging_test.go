@@ -28,10 +28,10 @@ func createNSortedInDir(dir string) {
 
 		sort.Ints(nums)
 		for i := 0; i < N; i++ {
-			bytes := []byte(fmt.Sprintf("%d", nums[i]))
-			_, _ = file.Write(bytes)
 			if i != N-1 {
-				_, _ = file.Write([]byte("\n"))
+				file.WriteString(fmt.Sprintf("%d\n", nums[i]))
+			} else {
+				file.WriteString(fmt.Sprintf("%d", nums[i]))
 			}
 		}
 	}
@@ -41,23 +41,15 @@ func createNSortedInDir(dir string) {
 // mkdirOrRemove creates a directory if it does not exist,
 // or removes all files in the directory if it exists.
 func mkdirOrRemove(dir string) {
-	if _, err := os.Stat(dir); os.IsNotExist(err) {
-		err := os.MkdirAll(dir, 0755)
+	if _, err := os.Stat(dir); os.IsExist(err) {
+		err := os.RemoveAll(dir)
 		if err != nil {
 			panic(err)
 		}
-	} else {
-		files, err := os.ReadDir(dir)
-		if err != nil {
-			panic(err)
-		}
-
-		for _, file := range files {
-			err = os.Remove(dir + "/" + file.Name())
-			if err != nil {
-				panic(err)
-			}
-		}
+	}
+	err := os.MkdirAll(dir, 0755)
+	if err != nil {
+		panic(err)
 	}
 }
 
@@ -88,21 +80,22 @@ func (b *Block) Next() bool {
 	line, _, err := b.r.ReadLine()
 	if err != nil {
 		if err != io.EOF {
-			panic("unexpected error")
+			panic(fmt.Sprintf("unexpected error: %v", err))
 		}
 		return false
 	}
 	b.line = string(line)
 	return true
 }
+
 func (b *Block) Value() int {
 	n, err := strconv.Atoi(b.line)
 	if err != nil {
 		panic("should not happen")
 	}
 	return n
-
 }
+
 func listFilesInDir(dir string) []string {
 	files, err := os.ReadDir(dir)
 	if err != nil {
@@ -116,7 +109,7 @@ func listFilesInDir(dir string) []string {
 	return result
 }
 
-func TestMerging(t *testing.T) {
+func TestMinHeapMerging(t *testing.T) {
 	dir := "/tmp/k_way_merging"
 	mkdirOrRemove(dir)
 	createNSortedInDir(dir)
