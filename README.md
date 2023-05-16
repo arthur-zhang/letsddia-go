@@ -26,9 +26,10 @@ and maintainable data-intensive applications across different language ecosystem
 * Sql parser
 * Column-storage
 
-### Misc
+### Algorithms
 
 * [K Way Merging File](./merging-k-sorted-list)
+* [rabin-karp](./algorithms/rabin-karp)
 
 ### Storage
 

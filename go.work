@@ -1,10 +1,11 @@
 go 1.20
 
 use (
+	./algorithms/rabin-karp
 	./btree/b-tree-mem
 	./btree/b-tree-on-disk
 	./merging-k-sorted-list
 	./skiplist
-	commons-io
 	bitcask
+	commons-io
 )
