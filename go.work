@@ -7,4 +7,5 @@ use (
 	./skiplist
 	commons-io
 	bitcask
+	hash/hashmap
 )
