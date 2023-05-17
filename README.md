@@ -29,7 +29,8 @@ and maintainable data-intensive applications across different language ecosystem
 ### Algorithms
 
 * [K Way Merging File](./merging-k-sorted-list)
-* [rabin-karp](./algorithms/rabin-karp)
+* [Rolling Hash (Rabin-Karp Algorithm)](./algorithms/rabin-karp)
+* [Cuckoo Hashing](./algorithms/cuckoo-hashing)
 
 ### Storage
 
@@ -49,7 +50,6 @@ and maintainable data-intensive applications across different language ecosystem
 
 * [byteorder](./commons-io/byteorder)  provide rust like byteorder crate for golang
 * [file_utils](./commons-io/file_utils) provide Java commons-io like file_utils for golang
-
 
 ---
 

@@ -1,6 +1,7 @@
 go 1.20
 
 use (
+	./algorithms/cuckoo-hashing
 	./algorithms/rabin-karp
 	./btree/b-tree-mem
 	./btree/b-tree-on-disk
