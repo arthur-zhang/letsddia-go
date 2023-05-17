@@ -16,6 +16,7 @@ and maintainable data-intensive applications across different language ecosystem
 * [K Way Merging File](./merging-k-sorted-list)
 * [Rolling Hash (Rabin-Karp Algorithm)](./algorithms/rabin-karp)
 * [Cuckoo Hashing](./algorithms/cuckoo-hashing)
+* [Consistent Hash(Hash Ring)](./hash-ring)
 
 ### Storage
 
