@@ -5,8 +5,10 @@ use (
 	./algorithms/rabin-karp
 	./btree/b-tree-mem
 	./btree/b-tree-on-disk
+	./hash-ring
 	./merging-k-sorted-list
 	./skiplist
 	bitcask
 	commons-io
+
 )
