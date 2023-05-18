@@ -17,6 +17,7 @@ and maintainable data-intensive applications across different language ecosystem
 * [Rolling Hash (Rabin-Karp Algorithm)](./algorithms/rabin-karp)
 * [Cuckoo Hashing](./algorithms/cuckoo-hashing)
 * [Consistent Hash(Hash Ring)](./hash-ring)
+* [Bloom Filter](./bloom-filter)
 
 ### Storage
 

@@ -3,6 +3,7 @@ go 1.20
 use (
 	./algorithms/cuckoo-hashing
 	./algorithms/rabin-karp
+	./bloom-filter
 	./btree/b-tree-mem
 	./btree/b-tree-on-disk
 	./hash-ring
@@ -10,5 +11,5 @@ use (
 	./skiplist
 	bitcask
 	commons-io
-
+	bitset
 )
