@@ -1,6 +1,7 @@
 go 1.20
 
 use (
+	./algorithms/boyer-moore-majority
 	./algorithms/cuckoo-hashing
 	./algorithms/rabin-karp
 	./bloom-filter
@@ -10,6 +11,6 @@ use (
 	./merging-k-sorted-list
 	./skiplist
 	bitcask
-	commons-io
 	bitset
+	commons-io
 )
