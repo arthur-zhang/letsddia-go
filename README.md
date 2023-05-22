@@ -19,6 +19,7 @@ and maintainable data-intensive applications across different language ecosystem
 * [Consistent Hash(Hash Ring)](./hash-ring)
 * [Bloom Filter](./bloom-filter)
 * [Boyer–Moore majority vote algorithm](./algorithms/boyer-moore-majority)
+* [Count-Min Sketch](./algorithms/count-min-sketch)
 
 ### Storage
 
