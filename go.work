@@ -1,9 +1,11 @@
 go 1.20
 
 use (
+	./algorithms/boyer-moore-majority
 	./algorithms/count-min-sketch
 	./algorithms/boyer-moore-majority
 	./algorithms/cuckoo-hashing
+	./algorithms/hyperloglog
 	./algorithms/rabin-karp
 	./bloom-filter
 	./btree/b-tree-mem
@@ -12,8 +14,8 @@ use (
 	./merging-k-sorted-list
 	./skiplist
 	bitcask
+	bitset
 	commons-io
 	bitset
 	hash/hashmap
-
 )
