@@ -11,7 +11,6 @@ const delta = 0.01
 type TDigestV2 struct {
 	centroids    []Centroid
 	maxCentroids int
-	count        int
 }
 
 func NewTDigestV2(maxCentroids int) TDigestV2 {
@@ -19,7 +18,6 @@ func NewTDigestV2(maxCentroids int) TDigestV2 {
 	return TDigestV2{
 		centroids:    centroids,
 		maxCentroids: maxCentroids,
-		count:        0,
 	}
 }
 func (t *TDigestV2) Insert(x float64) {
