@@ -21,6 +21,7 @@ and maintainable data-intensive applications across different language ecosystem
 * [Boyer–Moore majority vote algorithm](./algorithms/boyer-moore-majority)
 * [Count-Min Sketch](./algorithms/count-min-sketch)
 * [HyperLogLog](./algorithms/hyperloglog)
+* [TDigest](./t-digest)
 
 ### Storage
 
