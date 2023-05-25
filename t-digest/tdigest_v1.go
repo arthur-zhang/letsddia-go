@@ -7,9 +7,10 @@ import (
 )
 
 type Centroid struct {
-	mean  float64
-	count int
+	mean   float64
+	weight int
 }
+
 type TDigestV1 struct {
 	centroids []Centroid
 }
@@ -20,8 +21,8 @@ func NewTDigestV1() TDigestV1 {
 }
 func (t *TDigestV1) Insert(x float64) {
 	centroid := Centroid{
-		mean:  x,
-		count: 1,
+		mean:   x,
+		weight: 1,
 	}
 	t.centroids = append(t.centroids, centroid)
 }
@@ -36,17 +37,17 @@ func (t *TDigestV1) Quantile(q float64) float64 {
 		return t.centroids[i].mean < t.centroids[j].mean
 	})
 
-	totalCount := lo.SumBy(t.centroids, func(c Centroid) int {
-		return c.count
+	totalWeight := lo.SumBy(t.centroids, func(c Centroid) int {
+		return c.weight
 	})
-	target := q * float64(totalCount)
+	target := q * float64(totalWeight)
 
-	totalCount = 0
+	totalWeight = 0
 	for _, c := range t.centroids {
-		if float64(totalCount+c.count) >= target {
+		if float64(totalWeight+c.weight) >= target {
 			return c.mean
 		}
-		totalCount += c.count
+		totalWeight += c.weight
 	}
 	return t.centroids[len(t.centroids)-1].mean
 }
