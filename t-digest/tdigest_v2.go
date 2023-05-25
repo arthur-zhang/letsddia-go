@@ -6,16 +6,15 @@ import (
 	"sort"
 )
 
-const delta = 10.0
+// δ
+const Delta = 10.0
 
 type TDigestV2 struct {
-	centroids    []Centroid
-	maxCentroids int
-	count        int
+	centroids []Centroid
+	count     int
 }
 
 func mergeCentroid(a, b Centroid) Centroid {
-
 	weight := a.weight + b.weight
 	mean := (a.mean*float64(a.weight) + b.mean*float64(b.weight)) / float64(weight)
 	return Centroid{
@@ -23,12 +22,11 @@ func mergeCentroid(a, b Centroid) Centroid {
 		weight: weight,
 	}
 }
-func NewTDigestV2(maxCentroids int) TDigestV2 {
+func NewTDigestV2() TDigestV2 {
 	centroids := make([]Centroid, 0)
 	return TDigestV2{
-		centroids:    centroids,
-		maxCentroids: maxCentroids,
-		count:        0,
+		centroids: centroids,
+		count:     0,
 	}
 }
 func (t *TDigestV2) Insert(x float64) {
@@ -51,23 +49,25 @@ func (t *TDigestV2) compress() {
 	totalWeight := lo.SumBy(t.centroids, func(c Centroid) int {
 		return c.weight
 	})
-	ys := make([]Centroid, 0)
-	ys = append(ys, t.centroids[0])
-	minPotential := getPotential(0.0)
-	total := t.centroids[0].weight
+	newCentroids := make([]Centroid, 0)
+	newCentroids = append(newCentroids, t.centroids[0])
+	minK := getK(0.0) // -2.5
+	weightSoFar := t.centroids[0].weight
 	for i := 1; i < len(t.centroids); i++ {
 		x := t.centroids[i]
-		nextQid := float64(total+x.weight) / float64(totalWeight)
-		if getPotential(nextQid)-minPotential <= 1 {
-			ys[len(ys)-1] = mergeCentroid(ys[len(ys)-1], x)
+		nextQ := float64(weightSoFar+x.weight) / float64(totalWeight)
+		//Two adjacent centroids can be merged if their combined potential difference does not violate constraint
+		// σ(b) = π(h) − π(ℓ), σ(b) ≤ 1
+		if getK(nextQ)-minK <= 1 {
+			newCentroids[len(newCentroids)-1] = mergeCentroid(newCentroids[len(newCentroids)-1], x)
 		} else {
-			ys = append(ys, x)
-			minPotential = getPotential(float64(total) / float64(totalWeight))
+			newCentroids = append(newCentroids, x)
+			minK = getK(float64(weightSoFar) / float64(totalWeight))
 		}
-		total += x.weight
+		weightSoFar += x.weight
 	}
 
-	t.centroids = ys
+	t.centroids = newCentroids
 }
 func (t *TDigestV2) Quantile(q float64) float64 {
 	if len(t.centroids) == 0 {
@@ -80,13 +80,12 @@ func (t *TDigestV2) Quantile(q float64) float64 {
 		return t.centroids[i].mean < t.centroids[j].mean
 	})
 
-	totalCount := lo.SumBy(t.centroids, func(c Centroid) int {
-		return c.weight
-	})
-	idx := q * float64(totalCount)
+	totalWeight := lo.SumBy(t.centroids, func(c Centroid) int { return c.weight })
+	idx := q * float64(totalWeight)
 
 	maxIdx := float64(t.centroids[0].weight / 2)
 
+	// idx is on the first half of the first bin
 	if idx < maxIdx {
 		return t.centroids[0].mean
 	}
@@ -94,15 +93,22 @@ func (t *TDigestV2) Quantile(q float64) float64 {
 	for i := 0; i < len(t.centroids)-1; i++ {
 		c := t.centroids[i]
 		nextC := t.centroids[i+1]
-		intervalLength := float64(c.weight+nextC.weight) / 2
-		if idx < maxIdx+intervalLength {
-			return c.mean*(1-(idx-maxIdx)/intervalLength) + nextC.mean*((idx-maxIdx)/intervalLength)
+		intervalWeight := float64(c.weight+nextC.weight) / 2
+		if idx < maxIdx+intervalWeight {
+			lambda := (idx - maxIdx) / intervalWeight
+			// q(θ) = (1 − λ)b(i) + λb(i + 1)
+			return (1-lambda)*c.mean + lambda*nextC.mean
 		}
-		maxIdx += intervalLength
+		maxIdx += intervalWeight
 	}
+	// idx is on second half the last bin
 	return t.centroids[len(t.centroids)-1].mean
 }
 
-func getPotential(q float64) float64 {
-	return delta * (math.Asin(2*q-1) / (2 * math.Pi))
+// k(q) = δ/2π * arcsin(2q − 1)
+// q=1, k(q)=δ/2π * arcsin(1) = δ/2π * π/2 = δ/4
+// q=0, k(q)=δ/2π * arcsin(-1) = δ/2π * -π/2 = -δ/4
+// when δ=10, k(q) ∈ [-2.5, 2.5]
+func getK(q float64) float64 {
+	return Delta * (math.Asin(2*q-1) / (2 * math.Pi))
 }
