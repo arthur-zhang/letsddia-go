@@ -31,6 +31,7 @@ func NewNode[K constraints.Ordered, V any](level int, key *K, value *V) *Node[K,
 type SkipList[K constraints.Ordered, V any] struct {
 	Head  *Node[K, V]
 	Level int
+	size  int
 }
 
 // NewSkipList The new skip list is initialized :
@@ -116,6 +117,7 @@ func (list *SkipList[K, V]) Insert(key *K, value *V) {
 		// Set update[i]'s successor node to the new node
 		update[i].forward[i] = x
 	}
+	list.size += 1
 }
 func (list *SkipList[K, V]) Delete(searchKey *K) {
 	// Create an update slice, which is used to store the nodes that need to update pointers in each layer.
@@ -153,6 +155,15 @@ func (list *SkipList[K, V]) Delete(searchKey *K) {
 	for list.Level > 1 && list.Head.forward[list.Level-1] == nil {
 		list.Level--
 	}
+	list.size -= 1
+}
+
+func (list *SkipList[K, V]) Size() int {
+	return list.size
+}
+
+func (list *SkipList[K, V]) IsEmpty() bool {
+	return list.size == 0
 }
 
 func (list *SkipList[K, V]) Iterator() Iterator[K, V] {

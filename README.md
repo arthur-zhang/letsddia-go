@@ -25,7 +25,8 @@ and maintainable data-intensive applications across different language ecosystem
 
 ### Storage
 
-* [bitcask](./bitcask)
+* [Bitcask](./bitcask)
+* [Inverted Index](./inverted-index)
 
 ### BTree
 
@@ -44,9 +45,6 @@ and maintainable data-intensive applications across different language ecosystem
 
 ### Upcoming
 
-* TDigest
-* HyperLogLog
-* Bloom Filter
 * LSM
 * Gossip
 * Raft
