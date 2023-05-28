@@ -26,6 +26,7 @@ and maintainable data-intensive applications across different language ecosystem
 ### Storage
 
 * [Bitcask](./bitcask)
+* [LSM](./lsm)
 * [Inverted Index](./inverted-index)
 
 ### BTree
@@ -45,7 +46,6 @@ and maintainable data-intensive applications across different language ecosystem
 
 ### Upcoming
 
-* LSM
 * Gossip
 * Raft
 * Wal
