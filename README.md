@@ -22,6 +22,7 @@ and maintainable data-intensive applications across different language ecosystem
 * [Count-Min Sketch](./algorithms/count-min-sketch)
 * [HyperLogLog](./algorithms/hyperloglog)
 * [TDigest](./t-digest)
+* [Run Length Encoding](./algorithms/run-length-encoding)
 
 ### Storage
 

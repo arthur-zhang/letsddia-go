@@ -6,6 +6,7 @@ use (
 	algorithms/cuckoo-hashing
 	algorithms/hyperloglog
 	algorithms/rabin-karp
+	algorithms/run-length-encoding
 	bloom-filter
 	btree/b-tree-mem
 	btree/b-tree-on-disk
@@ -21,4 +22,5 @@ use (
 	t-digest
 	lodash
 	inverted-index
+
 )
