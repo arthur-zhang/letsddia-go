@@ -23,6 +23,7 @@ and maintainable data-intensive applications across different language ecosystem
 * [HyperLogLog](./algorithms/hyperloglog)
 * [TDigest](./t-digest)
 * [Run Length Encoding](./algorithms/run-length-encoding)
+* [SimHash](./algorithms/simhash)
 
 ### Storage
 
