@@ -24,6 +24,7 @@ and maintainable data-intensive applications across different language ecosystem
 * [TDigest](./t-digest)
 * [Run Length Encoding](./algorithms/run-length-encoding)
 * [SimHash](./algorithms/simhash)
+* [Roaring Bitmap](./algorithms/roaring-bitmap)
 
 ### Storage
 
