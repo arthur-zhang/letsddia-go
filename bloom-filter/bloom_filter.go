@@ -5,7 +5,6 @@ import (
 	"crypto/md5"
 	"crypto/sha1"
 	"encoding/binary"
-	"fmt"
 	"github.com/spaolacci/murmur3"
 	"hash"
 	"hash/crc64"
@@ -87,8 +86,8 @@ func calcN(n uint32) uint32 {
 func NewBloomFilter[T Byteable](n uint32, f float64) *BloomFilter[T] {
 	m := calcM(n, f)
 	k := calcK(m, n)
-	bits := bitset.New(m)
-	m = bits.Len()
+	bits := bitset.New(uint64(m))
+	m = uint32(bits.Len())
 
 	println("n:", n, "f:", f, "m:", m, "k:", k)
 	return &BloomFilter[T]{
@@ -104,24 +103,15 @@ func NewBloomFilter[T Byteable](n uint32, f float64) *BloomFilter[T] {
 func (bf *BloomFilter[T]) Insert(item T) {
 	for _, hashFunc := range bf.hashFuncs {
 		h := hashFunc(item) % uint64(bf.m)
-		bf.bits.Set(uint32(h))
+		bf.bits.Set(h)
 	}
 }
 func (bf *BloomFilter[T]) LookUp(item T) bool {
 	for _, hashFunc := range bf.hashFuncs {
 		h := hashFunc(item) % uint64(bf.m)
-		if !bf.bits.IsSet(uint32(h)) {
+		if !bf.bits.IsSet(h) {
 			return false
 		}
 	}
 	return true
-}
-
-func (bf *BloomFilter[T]) DebugPrint() {
-	for i, bit := range bf.bits {
-		if (i % 16) == 0 {
-			fmt.Println()
-		}
-		fmt.Printf("%08b ", bit)
-	}
 }

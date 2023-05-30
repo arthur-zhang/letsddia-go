@@ -1,24 +1,41 @@
 package bitset
 
-type BitSet []byte
+const BITS = 64
 
-func New(size uint32) BitSet {
-	size = (size + 7) &^ 7
-	return make([]byte, size>>3)
-}
-func (bs *BitSet) Len() uint32 {
-	return uint32(len(*bs)) << 3
+type BitSet struct {
+	data []uint64
+	len  uint64
 }
 
-func (bs BitSet) Set(n uint32) {
+func New(bits uint64) BitSet {
+	blocks, rem := divRem(bits)
+	if rem > 0 {
+		blocks++
+	}
+	return BitSet{make([]uint64, blocks), bits}
+}
+func divRem(x uint64) (uint64, uint64) {
+	return x / BITS, x % (BITS - 1)
+}
+func (bs *BitSet) Len() uint64 {
+	return bs.len
+}
+
+// Set Enable bit and return old value
+func (bs BitSet) Set(bit uint64) bool {
+	if bit >= bs.Len() {
+		panic("out of range")
+	}
+	block, i := divRem(bit)
+	word := bs.data[block]
+	old := word&(1<<i) != 0
+	bs.data[block] |= 1 << i
+	return old
+}
+func (bs BitSet) IsSet(n uint64) bool {
 	if n >= bs.Len() {
 		panic("out of range")
 	}
-	bs[n>>3] |= 1 << (n & 7)
-}
-func (bs BitSet) IsSet(n uint32) bool {
-	if n >= bs.Len() {
-		panic("out of range")
-	}
-	return bs[n>>3]&(1<<(n&7)) != 0
+	block, i := divRem(n)
+	return bs.data[block]&(1<<i) != 0
 }

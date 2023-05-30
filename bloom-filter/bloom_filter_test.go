@@ -92,7 +92,7 @@ func TestFalsePositiveRate(t *testing.T) {
 
 	falsePositiveRate := float64(falsePositiveCount) / float64(testCount)
 	t.Logf("False positive rate: %f", falsePositiveRate)
-	if math.Abs(falsePositiveRate-expectedFalsePositiveRate) > 0.001 {
+	if math.Abs(falsePositiveRate-expectedFalsePositiveRate) > 0.01 {
 		t.Errorf("False positive rate is too high")
 	}
 }

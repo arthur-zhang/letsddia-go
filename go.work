@@ -8,6 +8,7 @@ use (
 	algorithms/rabin-karp
 	algorithms/simhash
 	algorithms/run-length-encoding
+	algorithms/roaring-bitmap
 	bloom-filter
 	btree/b-tree-mem
 	btree/b-tree-on-disk
